@@ -1,5 +1,7 @@
 package com.codingf.morpion;
 
+import com.codingf.morpion.classes.Cases;
+
 public class Jeu {
 
     static void affichageGrille(){
