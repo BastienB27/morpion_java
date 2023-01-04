@@ -7,34 +7,35 @@ import java.util.Scanner;
 
 public class Jeu {
 
+    static char[] grid =
+            {
+                    ' ', ' ', ' ',
+                    ' ', ' ', ' ',
+                    ' ', ' ', ' ', ' '
+            };
+
     static void affichageGrille(){
-        System.out.println(" 1 | 2 | 3 ");
+        /*System.out.println(" 1 | 2 | 3 ");
         System.out.println("───┼───┼───");
         System.out.println(" 4 | 5 | 6 ");
         System.out.println("───┼───┼───");
-        System.out.println(" 7 | 8 | 9 ");
+        System.out.println(" 7 | 8 | 9 ");*/
+        System.out.println(grid[1] + " | " + grid[2] + " | " + grid[3]);
+        System.out.println("──┼───┼──");
+        System.out.println(grid[4] + " | " + grid[5] + " | " + grid[6]);
+        System.out.println("──┼───┼──");
+        System.out.println(grid[7] + " | " + grid[8] + " | " + grid[9]);
     }
 
     public static void main(String[] args) {
 
-        affichageGrille();
+        //affichageGrille();
 
-        /*Cases case1 = new Cases("X", 2, 0);
-
-        case1.setSimplePosition(case1.getxPosition(), case1.getyPosition());
-
-        System.out.println(case1);
-
-        Scanner symbol = new Scanner(System.in);
-        System.out.println("Quel symbole ?");
-        String symbole = symbol.nextLine();
-        if (symbole.length() != 1){
-            System.err.println("Fuck you");
-        }
-
-        case1.setSymbol(symbole);
-
-        System.out.println(case1);*/
+        char p1 = 'O';
+        char p2 = 'X';
+        char currentPlayer = p1;
+        Scanner scan = new Scanner(System.in);
+        String input;
 
         // condition de victoire
         int lenghboard = 9; //Changer en variable avec un inconnu
@@ -44,35 +45,64 @@ public class Jeu {
 
         while(!victoire) {
 
-            if (case1 == case2 && case1 == case3 && case1 != " ") {
+            affichageGrille();
+
+            int c;
+            System.out.println("Player " + currentPlayer + ", hello: ");
+            input = scan.nextLine();
+
+            try {
+                c = Integer.parseInt(input);
+                if (1 <= c && c <= 9) {
+                    if (grid[c] == ' '){
+                        grid[c] = currentPlayer;
+                    }
+                    else {
+                        System.err.println("Cette case est déjà prise");
+                        continue;
+                    }
+
+                }
+                else {
+                    System.err.println("Veuillez rentrer un nombre entier entre 1 et 9");
+                    continue;
+                }
+
+            } catch (Exception e) {
+                System.err.println("Veuillez rentrer un nombre entier entre 1 et 9");
+                continue;
+            }
+            
+
+            if (grid[1] == grid[2] && grid[1] == grid[3] && grid[1] != ' ') {
                 victoire = true;
             }
 
-            if (case4 == case5 && case4 == case6 && case4 != " ") {
+            if (grid[4] == grid[5] && grid[4] == grid[6] && grid[4] != ' ') {
                 victoire = true;
             }
 
-            if (case7 == case8 && case7 == case9 && case7 != " ") {
+            if (grid[7] == grid[8] && grid[7] == grid[9] && grid[7] != ' ') {
                 victoire = true;
             }
 
-            if (case1 == case4 && case1 == case7 && case1 != " ") {
+            if (grid[1] == grid[4] && grid[1] == grid[7] && grid[1] != ' ') {
                 victoire = true;
             }
 
-            if (case2 == case5 && case5 == case8 && case2 != " ") {
+            if (grid[2] == grid[5] && grid[5] == grid[8] && grid[2] != ' ') {
                 victoire = true;
             }
 
-            if (case3 == case6 && case3 == case9 && case3 != " ") {
+            if (grid[3] == grid[6] && grid[3] == grid[9] && grid[3] != ' ') {
                 victoire = true;
             }
 
-            if (case1 == case5 && case1 == case9 && case1 != " ") {
+            if (grid[1] == grid[5] && grid[1] == grid[9] && grid[1] != ' ') {
                 victoire = true;
             }
 
-            if (case3 == case5 && case3 == case7 && case3 != " ") {
+            if (grid[1] == grid[5] && grid[3] == grid[7] && grid[3] != ' ') {
                 victoire = true;
             }
 
@@ -81,10 +111,16 @@ public class Jeu {
                 System.out.println("Egalité, pas de victoire");
                 break;
             }
+            if (currentPlayer == p1 && !victoire){
+                currentPlayer = p2;
+            } else {
+                currentPlayer = p1;
+            }
         }
 
         if(victoire){
-            System.out.println("Victoire de", symbole);
+            affichageGrille();
+            System.out.println("Victoire de " +  currentPlayer);
         }
 
     }
