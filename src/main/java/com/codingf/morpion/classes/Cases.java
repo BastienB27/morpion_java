@@ -2,24 +2,24 @@ package com.codingf.morpion.classes;
 
 public class Cases {
 
-    String symbol;
+    char symbol;
     int xPosition;
     int yPosition;
     int simplePosition;
 
     public Cases(){}
 
-    public Cases(String symbol, int xPosition, int yPosition) {
+    public Cases(char symbol, int xPosition, int yPosition) {
         this.symbol = symbol;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
     }
 
-    public String getSymbol() {
+    public char getSymbol() {
         return symbol;
     }
 
-    public void setSymbol(String symbol) {
+    public void setSymbol(char symbol) {
         this.symbol = symbol;
     }
 

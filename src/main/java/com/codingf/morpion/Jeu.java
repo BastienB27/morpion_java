@@ -3,15 +3,20 @@ package com.codingf.morpion;
 import com.codingf.morpion.classes.Cases;
 
 import javax.print.attribute.standard.PresentationDirection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Jeu {
 
+    static List<Cases> casesList = new ArrayList<>();
+
     static char[] grid =
             {
-                    ' ', ' ', ' ',
-                    ' ', ' ', ' ',
-                    ' ', ' ', ' ', ' '
+                ' ',
+                ' ', ' ', ' ',
+                ' ', ' ', ' ',
+                ' ', ' ', ' '
             };
 
     static void affichageGrille(){
@@ -20,14 +25,31 @@ public class Jeu {
         System.out.println(" 4 | 5 | 6 ");
         System.out.println("───┼───┼───");
         System.out.println(" 7 | 8 | 9 ");*/
-        System.out.println(grid[1] + " | " + grid[2] + " | " + grid[3]);
+        System.out.println(casesList.get(1).getSymbol() + " | " + casesList.get(2).getSymbol() + " | " + casesList.get(3).getSymbol());
         System.out.println("──┼───┼──");
-        System.out.println(grid[4] + " | " + grid[5] + " | " + grid[6]);
+        System.out.println(casesList.get(4).getSymbol() + " | " + casesList.get(5).getSymbol() + " | " + casesList.get(6).getSymbol());
         System.out.println("──┼───┼──");
-        System.out.println(grid[7] + " | " + grid[8] + " | " + grid[9]);
+        System.out.println(casesList.get(7).getSymbol() + " | " + casesList.get(8).getSymbol() + " | " + casesList.get(9).getSymbol());
     }
 
     public static void main(String[] args) {
+
+        //List<Cases> casesList = new ArrayList<>();
+
+        Cases blank = new Cases();
+
+        casesList.add(blank);
+
+        for(int i = 0; i<3; i++){
+            for(int j = 0; j<3; j++){
+                Cases square = new Cases(' ', i, j);
+                square.setSimplePosition(i, j);
+                //System.out.println(square);
+                casesList.add(square);
+            }
+        }
+
+        //System.out.println(casesList + "\n");
 
         //affichageGrille();
 
@@ -54,8 +76,9 @@ public class Jeu {
             try {
                 c = Integer.parseInt(input);
                 if (1 <= c && c <= 9) {
-                    if (grid[c] == ' '){
-                        grid[c] = currentPlayer;
+                    if (casesList.get(c).getSymbol() == ' '){
+                        casesList.get(c).setSymbol(currentPlayer);
+                        //grid[c] = currentPlayer;
                     }
                     else {
                         System.err.println("Cette case est déjà prise");
@@ -74,35 +97,51 @@ public class Jeu {
             }
             
 
-            if (grid[1] == grid[2] && grid[1] == grid[3] && grid[1] != ' ') {
+            if (casesList.get(1).getSymbol() == casesList.get(2).getSymbol() &&
+                    casesList.get(1).getSymbol() == casesList.get(3).getSymbol() &&
+                    casesList.get(1).getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (grid[4] == grid[5] && grid[4] == grid[6] && grid[4] != ' ') {
+            if (casesList.get(4).getSymbol() == casesList.get(5).getSymbol() &&
+                    casesList.get(4).getSymbol() == casesList.get(6).getSymbol() &&
+                    casesList.get(4).getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (grid[7] == grid[8] && grid[7] == grid[9] && grid[7] != ' ') {
+            if (casesList.get(7).getSymbol() == casesList.get(8).getSymbol() &&
+                    casesList.get(7).getSymbol() == casesList.get(9).getSymbol() &&
+                    casesList.get(7).getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (grid[1] == grid[4] && grid[1] == grid[7] && grid[1] != ' ') {
+            if (casesList.get(1).getSymbol() == casesList.get(4).getSymbol() &&
+                    casesList.get(1).getSymbol() == casesList.get(7).getSymbol() &&
+                    casesList.get(1).getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (grid[2] == grid[5] && grid[5] == grid[8] && grid[2] != ' ') {
+            if (casesList.get(2).getSymbol() == casesList.get(5).getSymbol() &&
+                    casesList.get(2).getSymbol() == casesList.get(8).getSymbol() &&
+                    casesList.get(2).getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (grid[3] == grid[6] && grid[3] == grid[9] && grid[3] != ' ') {
+            if (casesList.get(3).getSymbol() == casesList.get(6).getSymbol() &&
+                    casesList.get(3).getSymbol() == casesList.get(9).getSymbol() &&
+                    casesList.get(3).getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (grid[1] == grid[5] && grid[1] == grid[9] && grid[1] != ' ') {
+            if (casesList.get(1).getSymbol() == casesList.get(5).getSymbol() &&
+                    casesList.get(1).getSymbol() == casesList.get(9).getSymbol() &&
+                    casesList.get(1).getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (grid[1] == grid[5] && grid[3] == grid[7] && grid[3] != ' ') {
+            if (casesList.get(3).getSymbol() == casesList.get(5).getSymbol() &&
+                    casesList.get(3).getSymbol() == casesList.get(7).getSymbol() &&
+                    casesList.get(3).getSymbol() != ' ') {
                 victoire = true;
             }
 
