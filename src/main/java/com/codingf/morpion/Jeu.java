@@ -13,11 +13,13 @@ public class Jeu {
 
     //Fonction pour afficher la grille
     static void affichageGrille(){
-        System.out.println(casesList.get(1).getSymbol() + " | " + casesList.get(2).getSymbol() + " | " + casesList.get(3).getSymbol());
-        System.out.println("──┼───┼──");
-        System.out.println(casesList.get(4).getSymbol() + " | " + casesList.get(5).getSymbol() + " | " + casesList.get(6).getSymbol());
-        System.out.println("──┼───┼──");
-        System.out.println(casesList.get(7).getSymbol() + " | " + casesList.get(8).getSymbol() + " | " + casesList.get(9).getSymbol());
+        System.out.println("╔═══╦═══╦═══╗");
+        System.out.println("║ " + casesList.get(1).getSymbol() + " ║ " + casesList.get(2).getSymbol() + " ║ " + casesList.get(3).getSymbol() + " ║ ");
+        System.out.println("╠═══╬═══╬═══╣");
+        System.out.println("║ " + casesList.get(4).getSymbol() + " ║ " + casesList.get(5).getSymbol() + " ║ " + casesList.get(6).getSymbol() + " ║ ");
+        System.out.println("╠═══╬═══╬═══╣");
+        System.out.println("║ " + casesList.get(7).getSymbol() + " ║ " + casesList.get(8).getSymbol() + " ║ " + casesList.get(9).getSymbol() + " ║ ");
+        System.out.println("╚═══╩═══╩═══╝");
     }
 
     public static void main(String[] args) {
@@ -41,6 +43,7 @@ public class Jeu {
         String player1Name = scan.nextLine();
         System.out.println("Joueur 2, choisissez votre pseudo");
         String player2Name = scan.nextLine();
+        System.out.println();
 
         char p1 = 'O';
         char p2 = 'X';
@@ -54,12 +57,14 @@ public class Jeu {
         boolean victoire = false;
 
         //Explication de l'agencement des cases et de ce que les joueurs devront faire
-        System.out.println(" 1 | 2 | 3 ");
-        System.out.println("───┼───┼───");
-        System.out.println(" 4 | 5 | 6 ");
-        System.out.println("───┼───┼───");
-        System.out.println(" 7 | 8 | 9 ");
-        System.out.println("Vous devrez entrer le nombre correspondant à la case sur laquelle vous voulez placer votre symbole \n \n");
+        System.out.println("╔═══╦═══╦═══╗");
+        System.out.println("║ 1 ║ 2 ║ 3 ║");
+        System.out.println("╠═══╬═══╬═══╣");
+        System.out.println("║ 4 ║ 5 ║ 6 ║");
+        System.out.println("╠═══╬═══╬═══╣");
+        System.out.println("║ 7 ║ 8 ║ 9 ║");
+        System.out.println("╚═══╩═══╩═══╝");
+        System.out.println("Vous devrez entrer le nombre correspondant à la case sur laquelle vous voulez placer votre symbole \n");
 
         //Boucle principale du jeu
         while(!victoire) {
