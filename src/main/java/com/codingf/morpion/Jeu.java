@@ -1,6 +1,7 @@
 package com.codingf.morpion;
 
 import com.codingf.morpion.classes.Cases;
+import com.codingf.morpion.classes.Grille;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,10 +14,10 @@ public class Jeu {
 
     //Liste d'objets Cases qui regroupe les informations de toutes les cases
     //static List<Cases> casesList = new ArrayList<>();
-    static Cases[][] casesList = new Cases[5][5];
+    static Cases[][] casesList = new Cases[10][10];
 
     //Fonction pour afficher la grille
-    static void affichageGrille(){
+    /*static void affichageGrille(){
         System.out.print("  ");
         for(int i = 1; i<=gridSize; i++){
             System.out.print("   " + i);
@@ -57,9 +58,9 @@ public class Jeu {
         System.out.println("   ╠═══╬═══╬═══╣");
         System.out.println(" 2 ║ " + casesList[1][0].getSymbol() + " ║ " + casesList[1][1].getSymbol() + " ║ " + casesList[1][2].getSymbol() + " ║ ");
         System.out.println("   ╠═══╬═══╬═══╣");
-        System.out.println(" 3 ║ " + casesList[2][0].getSymbol() + " ║ " + casesList[2][1].getSymbol() + " ║ " + casesList[2][2].getSymbol() + " ║ ");*/
+        System.out.println(" 3 ║ " + casesList[2][0].getSymbol() + " ║ " + casesList[2][1].getSymbol() + " ║ " + casesList[2][2].getSymbol() + " ║ ");
         //System.out.println("   ╚═══╩═══╩═══╝");
-    }
+    }*/
 
     static List<Character> symbolList = new ArrayList<>();
 
@@ -128,9 +129,6 @@ public class Jeu {
 
     }
 
-
-
-
     public static void main(String[] args) {
 
         //On demande les pseudos des joueurs
@@ -145,10 +143,11 @@ public class Jeu {
         System.out.println("Quelle taille de grille voulez-vous ?");
         gridSize = askGridSize.nextInt();
         System.out.println(gridSize);
+        Grille grille = new Grille(gridSize, casesList);
 
         //Création des cases avec leurs indices
-        for(int i = 0; i<gridSize; i++){
-            for(int j = 0; j<gridSize; j++){
+        for(int i = 0; i<grille.getSize(); i++){
+            for(int j = 0; j<grille.getSize(); j++){
                 Cases square = new Cases(' ', i, j);
                 square.setSimplePosition(i, j);
                 casesList[i][j] = square;
@@ -179,7 +178,7 @@ public class Jeu {
         //Boucle principale du jeu
         while(!victoire) {
 
-            affichageGrille();
+            grille.affichageGrille();
 
             //On demande au joueur de placer son symbole de la grille
             System.out.println("Au tour de " + currentPlayer + " de jouer (symbole " + currentPlayerSymbol + ")");
@@ -205,9 +204,10 @@ public class Jeu {
                 l = Integer.parseInt(lineInput)-1;
                 c = Integer.parseInt(columnInput)-1;
                 //Si le nombre entré est correct et que la case est bien vide, on place le symbole du joueur
-                if (0 <= l && l <= 3) {
-                    if (0 <= c && c <= 3) {
+                if (0 <= l && l <= grille.getSize()-1) {
+                    if (0 <= c && c <= grille.getSize()-1) {
                         if (casesList[l][c].getSymbol() == ' '){
+                            System.out.println("ligne : " + l + " colonne : " + c);
                             casesList[l][c].setSymbol(currentPlayerSymbol);
                         }
                         else {
@@ -231,22 +231,6 @@ public class Jeu {
                 System.out.println("Veuillez rentrer deux nombres entiers entre 1 et la taille de la grille");
                 continue;
             }
-
-            //boolean conditionDeVictoire = false;
-
-            /*for (int size = 0; size<gridSize; size++){
-                for (int ligne = 0; ligne<gridSize; ligne++){
-                    for (int colonne = 0; colonne<gridSize; colonne++){
-                        System.out.println(gridSize);
-                        System.out.println(casesList[ligne][colonne].getSymbol() + " symbol ligne " + ligne + " colonne " + colonne);
-                        System.out.println(casesList[ligne][size].getSymbol());
-                        if (casesList[ligne][colonne].getSymbol() == casesList[ligne][size].getSymbol() || casesList[ligne][colonne].getSymbol() != ' '){
-                            conditionDeVictoire = true;
-                            boolean allEqual = Arrays.stream(casesList).distinct().count() <= 1;
-                        }
-                    }
-                }
-            }*/
 
             //La liste des conditions de victoire
 
@@ -346,7 +330,7 @@ public class Jeu {
 
             //Si le nombre de coups est égal au nombre de cases, il y a égalité
             if (nombreCoups == lenghboard){
-                affichageGrille();
+                grille.affichageGrille();
                 System.out.println("Egalité, pas de victoire");
                 break;
             }
@@ -361,7 +345,7 @@ public class Jeu {
         }
 
         if(victoire){
-            affichageGrille();
+            grille.affichageGrille();
             System.out.println("Victoire de " + currentPlayer);
         }
 
