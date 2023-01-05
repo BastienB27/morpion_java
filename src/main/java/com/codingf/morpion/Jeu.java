@@ -250,24 +250,51 @@ public class Jeu {
 
             //La liste des conditions de victoire
 
+            //boolean allEqual = false;
+            boolean lVictory = false;
+            boolean cVictory = false;
+            boolean lrdVictory = false;
+            boolean rldVictory = false;
+
 
             lineVictory();
             //System.out.println(symbolList + " lines");
             System.out.println(listList + " lines");
 
+            for (int i = 0; i<listList.size(); i++){
+                lVictory = listList.get(i).stream().distinct().count() <= 1 && listList.get(i).get(0) != ' ';
+                if (lVictory){
+                    break;
+                }
+            }
+
             columnVictory();
             //System.out.println(symbolList + " columns");
             System.out.println(listList + " columns");
+            for (int i = 0; i<listList.size(); i++){
+                cVictory = listList.get(i).stream().distinct().count() <= 1 && listList.get(i).get(0) != ' ';
+                if (cVictory){
+                    break;
+                }
+            }
 
             leftRightDiagVictory();
             System.out.println(symbolList + " lr diag");
 
+            lrdVictory = symbolList.stream().distinct().count() <= 1 && symbolList.get(0) != ' ';
+
             rightLeftDiagVictory();
             System.out.println(symbolList + " rl diag");
 
+            rldVictory = symbolList.stream().distinct().count() <= 1 && symbolList.get(0) != ' ';
+
+            if  (lVictory || cVictory || lrdVictory || rldVictory){
+                victoire = true;
+            }
 
 
-            if (casesList[0][0].getSymbol() == casesList[0][1].getSymbol() &&
+
+            /*if (casesList[0][0].getSymbol() == casesList[0][1].getSymbol() &&
                     casesList[0][0].getSymbol() == casesList[0][2].getSymbol() &&
                     casesList[0][0].getSymbol() != ' ') {
                 victoire = true;
@@ -303,7 +330,7 @@ public class Jeu {
                 victoire = true;
             }
 
-            if (casesList[0][0].getSymbol() == casesList[1][1].getSymbol() &&
+            /*if (casesList[0][0].getSymbol() == casesList[1][1].getSymbol() &&
                     casesList[0][0].getSymbol() == casesList[2][2].getSymbol() &&
                     casesList[0][0].getSymbol() != ' ') {
                 victoire = true;
@@ -313,7 +340,7 @@ public class Jeu {
                     casesList[0][2].getSymbol() == casesList[2][0].getSymbol() &&
                     casesList[0][2].getSymbol() != ' ') {
                 victoire = true;
-            }
+            }*/
 
             nombreCoups++;
 
