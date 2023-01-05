@@ -8,32 +8,32 @@ import java.util.Scanner;
 
 public class Jeu {
 
+    //static int gridSize;
+
     //Liste d'objets Cases qui regroupe les informations de toutes les cases
-    static List<Cases> casesList = new ArrayList<>();
+    //static List<Cases> casesList = new ArrayList<>();
+    static Cases[][] casesList = new Cases[3][3];
 
     //Fonction pour afficher la grille
     static void affichageGrille(){
-        System.out.println("╔═══╦═══╦═══╗");
-        System.out.println("║ " + casesList.get(1).getSymbol() + " ║ " + casesList.get(2).getSymbol() + " ║ " + casesList.get(3).getSymbol() + " ║ ");
-        System.out.println("╠═══╬═══╬═══╣");
-        System.out.println("║ " + casesList.get(4).getSymbol() + " ║ " + casesList.get(5).getSymbol() + " ║ " + casesList.get(6).getSymbol() + " ║ ");
-        System.out.println("╠═══╬═══╬═══╣");
-        System.out.println("║ " + casesList.get(7).getSymbol() + " ║ " + casesList.get(8).getSymbol() + " ║ " + casesList.get(9).getSymbol() + " ║ ");
-        System.out.println("╚═══╩═══╩═══╝");
+        System.out.println("     1   2   3");
+        System.out.println("   ╔═══╦═══╦═══╗");
+        System.out.println(" 1 ║ " + casesList[0][0].getSymbol() + " ║ " + casesList[0][1].getSymbol() + " ║ " + casesList[0][2].getSymbol() + " ║ ");
+        System.out.println("   ╠═══╬═══╬═══╣");
+        System.out.println(" 2 ║ " + casesList[1][0].getSymbol() + " ║ " + casesList[1][1].getSymbol() + " ║ " + casesList[1][2].getSymbol() + " ║ ");
+        System.out.println("   ╠═══╬═══╬═══╣");
+        System.out.println(" 3 ║ " + casesList[2][0].getSymbol() + " ║ " + casesList[2][1].getSymbol() + " ║ " + casesList[2][2].getSymbol() + " ║ ");
+        System.out.println("   ╚═══╩═══╩═══╝");
     }
 
     public static void main(String[] args) {
-
-        //Case blanche pour pouvoir commencer les index des vraies cases à 1
-        Cases blank = new Cases();
-        casesList.add(blank);
 
         //Création des cases avec leurs indices
         for(int i = 0; i<3; i++){
             for(int j = 0; j<3; j++){
                 Cases square = new Cases(' ', i, j);
                 square.setSimplePosition(i, j);
-                casesList.add(square);
+                casesList[i][j] = square;
             }
         }
 
@@ -52,7 +52,7 @@ public class Jeu {
 
         String input;
 
-        int lenghboard = casesList.size()-1; // Nombre total de cases
+        int lenghboard = casesList.length*casesList.length; // Nombre total de cases
         int nombreCoups = 0; // Compteur du nombre de coups joués
         boolean victoire = false;
 
@@ -73,26 +73,45 @@ public class Jeu {
 
             //On demande au joueur de placer son symbole de la grille
             System.out.println("Au tour de " + currentPlayer + " de jouer (symbole " + p1 + ")");
-            System.out.println("Choisissez une case entre 1 et 9");
+            //System.out.println("Choisissez une case entre 1 et 9");
+            System.out.println("Choisissez une ligne et une colonne (ligne,colonne)");
             input = scan.nextLine();
+            String ligne;
+            String colonne;
+            try {
+                String[] inputResult = input.split(",");
+                ligne = inputResult[0];
+                colonne = inputResult[1];
+            }
+            catch (Exception e){
+                System.out.println("Veuillez respecter le format demandé : ligne,colonne");
+                continue;
+            }
 
+
+            int l;
             int c;
             try {
-                c = Integer.parseInt(input);
+                l = Integer.parseInt(ligne)-1;
+                c = Integer.parseInt(colonne)-1;
                 //Si le nombre entré est correct et que la case est bien vide, on place le symbole du joueur
-                if (1 <= c && c <= 9) {
-                    if (casesList.get(c).getSymbol() == ' '){
-                        casesList.get(c).setSymbol(currentPlayerSymbol);
+                if (0 <= l && l <= 3) {
+                    if (0 <= c && c <= 3) {
+                        if (casesList[l][c].getSymbol() == ' '){
+                            casesList[l][c].setSymbol(currentPlayerSymbol);
+                        }
+                        else {
+                            //On affiche une erreur si la case sélectionné est déjà prise
+                            System.out.println("Cette case est déjà prise");
+                            continue;
+                        }
                     }
-                    else {
-                        //On affiche une erreur si la case sélectionné est déjà prise
-                        System.out.println("Cette case est déjà prise");
-                        continue;
-                    }
+
+
 
                 }
                 else {
-                    //On affiche une erreur si le joueur sélectionne un nombre inférieur ou supérieur au nombre de cases
+                    //On affiche une erreur si le joueur sélectionne un nombre inférieur ou supérieur au nombre de lignes/colonnes
                     System.out.println(input + " n'est pas un nombre correct");
                     System.out.println("Veuillez rentrer un nombre entier entre 1 et 9");
                     continue;
@@ -107,51 +126,51 @@ public class Jeu {
 
 
             //La liste des conditions de victoire
-            if (casesList.get(1).getSymbol() == casesList.get(2).getSymbol() &&
-                    casesList.get(1).getSymbol() == casesList.get(3).getSymbol() &&
-                    casesList.get(1).getSymbol() != ' ') {
+            if (casesList[0][0].getSymbol() == casesList[0][1].getSymbol() &&
+                    casesList[0][0].getSymbol() == casesList[0][2].getSymbol() &&
+                    casesList[0][0].getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (casesList.get(4).getSymbol() == casesList.get(5).getSymbol() &&
-                    casesList.get(4).getSymbol() == casesList.get(6).getSymbol() &&
-                    casesList.get(4).getSymbol() != ' ') {
+            if (casesList[1][0].getSymbol() == casesList[1][1].getSymbol() &&
+                    casesList[1][0].getSymbol() == casesList[1][2].getSymbol() &&
+                    casesList[1][0].getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (casesList.get(7).getSymbol() == casesList.get(8).getSymbol() &&
-                    casesList.get(7).getSymbol() == casesList.get(9).getSymbol() &&
-                    casesList.get(7).getSymbol() != ' ') {
+            if (casesList[2][0].getSymbol() == casesList[2][1].getSymbol() &&
+                    casesList[2][0].getSymbol() == casesList[2][2].getSymbol() &&
+                    casesList[2][0].getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (casesList.get(1).getSymbol() == casesList.get(4).getSymbol() &&
-                    casesList.get(1).getSymbol() == casesList.get(7).getSymbol() &&
-                    casesList.get(1).getSymbol() != ' ') {
+            if (casesList[0][0].getSymbol() == casesList[1][0].getSymbol() &&
+                    casesList[0][0].getSymbol() == casesList[2][0].getSymbol() &&
+                    casesList[0][0].getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (casesList.get(2).getSymbol() == casesList.get(5).getSymbol() &&
-                    casesList.get(2).getSymbol() == casesList.get(8).getSymbol() &&
-                    casesList.get(2).getSymbol() != ' ') {
+            if (casesList[0][1].getSymbol() == casesList[1][1].getSymbol() &&
+                    casesList[0][1].getSymbol() == casesList[1][1].getSymbol() &&
+                    casesList[0][1].getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (casesList.get(3).getSymbol() == casesList.get(6).getSymbol() &&
-                    casesList.get(3).getSymbol() == casesList.get(9).getSymbol() &&
-                    casesList.get(3).getSymbol() != ' ') {
+            if (casesList[0][2].getSymbol() == casesList[1][2].getSymbol() &&
+                    casesList[0][2].getSymbol() == casesList[2][2].getSymbol() &&
+                    casesList[0][2].getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (casesList.get(1).getSymbol() == casesList.get(5).getSymbol() &&
-                    casesList.get(1).getSymbol() == casesList.get(9).getSymbol() &&
-                    casesList.get(1).getSymbol() != ' ') {
+            if (casesList[0][0].getSymbol() == casesList[1][1].getSymbol() &&
+                    casesList[0][0].getSymbol() == casesList[2][2].getSymbol() &&
+                    casesList[0][0].getSymbol() != ' ') {
                 victoire = true;
             }
 
-            if (casesList.get(3).getSymbol() == casesList.get(5).getSymbol() &&
-                    casesList.get(3).getSymbol() == casesList.get(7).getSymbol() &&
-                    casesList.get(3).getSymbol() != ' ') {
+            if (casesList[0][2].getSymbol() == casesList[1][1].getSymbol() &&
+                    casesList[0][2].getSymbol() == casesList[2][0].getSymbol() &&
+                    casesList[0][2].getSymbol() != ' ') {
                 victoire = true;
             }
 
