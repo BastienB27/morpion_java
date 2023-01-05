@@ -55,6 +55,7 @@ public class Jeu {
         int lenghboard = casesList.size()-1; // Nombre total de cases
         int nombreCoups = 0; // Compteur du nombre de coups joués
         boolean victoire = false;
+        boolean replay = false;
 
         //Explication de l'agencement des cases et de ce que les joueurs devront faire
         System.out.println("╔═══╦═══╦═══╗");
@@ -176,6 +177,17 @@ public class Jeu {
         if(victoire){
             affichageGrille();
             System.out.println("Victoire de " + currentPlayer);
+            Scanner nb = new Scanner(System.in);
+            System.out.println("Voulez-vous rejouer ? O (oui)/N (non)");
+            String answer = nb.nextLine();
+            if(answer == "O" || answer == "o"){
+
+            } else if (answer == "N" || answer == "n"){
+                System.out.println("Merci d'avoir joué au morpion !");
+            }
+            else{
+                System.out.println("Choisissez par O (oui) ou par N (non) ");
+            }
         }
 
     }
