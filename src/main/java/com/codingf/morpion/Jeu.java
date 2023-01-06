@@ -4,7 +4,16 @@ import com.codingf.morpion.modeles.Cases;
 import com.codingf.morpion.modeles.Grille;
 import com.codingf.morpion.fonctions.Victoire;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDateTime;
 
 public class Jeu {
 
@@ -15,6 +24,7 @@ public class Jeu {
             Grille grille;
             Cases[][] casesList = new Cases[9][9];
             char player2Symbol;
+            List<String> historique = new ArrayList<>();
 
             //On demande les pseudos et les symboles des joueurs
             Scanner scan = new Scanner(System.in);
@@ -27,6 +37,7 @@ public class Jeu {
             String player2Name = scan.nextLine();
 
             while (true){
+                //On fait en sorte que les deux joueurs ne choisissent pas le même symbole
                 System.out.println("Joueur 2, choisissez votre symbole");
                 player2Symbol = scan.nextLine().charAt(0);
                 if (player1Symbol == player2Symbol){
@@ -38,7 +49,6 @@ public class Jeu {
                 }
                 System.out.println();
             }
-
 
             while(true) {
 
@@ -61,6 +71,14 @@ public class Jeu {
                     System.out.println("Choisissez un nombre et non une lettre ou symbole");
                 }
             }
+
+            historique.add("Partie entre " + player1Name + " (" + player1Symbol + ") et " + player2Name + " (" + player2Symbol +  ") sur une grille de " + grille.getSize() + "*" + grille.getSize());
+
+            LocalDateTime gameTime = LocalDateTime.now();
+
+            String formattedDate = gameTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            String formattedTime = gameTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+            historique.add("Partie jouée le " + formattedDate + " à " + formattedTime);
 
             //Création des cases avec leurs indices
             for (int i = 0; i < grille.getSize(); i++) {
@@ -114,6 +132,7 @@ public class Jeu {
                         if (0 <= c && c <= grille.getSize() - 1) {
                             if (casesList[l][c].getSymbol() == ' ') {
                                 casesList[l][c].setSymbol(currentPlayerSymbol);
+                                historique.add(currentPlayer + " a joué " + currentPlayerSymbol + " en " + l + "," + c);
                             }
                             else {
                                 //On affiche une erreur si la case sélectionné est déjà prise
@@ -170,8 +189,27 @@ public class Jeu {
 
             if (victoire) {
                 grille.affichageGrille();
-                System.out.println("Victoire de " + currentPlayer);
+                System.out.println("Victoire de " + currentPlayer + "\n");
+                historique.add("Victoire de " + currentPlayer + "\n\n");
             }
+
+            //System.out.println("Historique de la partie : \n");
+
+            try {
+                BufferedWriter sortie = new BufferedWriter(new FileWriter("historique.txt", true));
+                for (int i = 0; i<historique.size(); i++){
+                    sortie.write(historique.get(i) + "\n");
+                }
+                sortie.close();
+            }
+            catch (IOException e){
+                System.out.println("Ce fichier n'existe pas");
+            }
+
+
+            System.out.println();
+
+            //Option pour recommencer une partie
             Scanner nb = new Scanner(System.in);
             System.out.println("Voulez-vous rejouer ? O (oui)/N (non)");
             String answer = nb.nextLine();
