@@ -4,10 +4,7 @@ import com.codingf.morpion.classes.Cases;
 import com.codingf.morpion.classes.Grille;
 import com.codingf.morpion.fonctions.Victoire;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Jeu {
 
@@ -16,7 +13,7 @@ public class Jeu {
         while(true) {
 
             Grille grille;
-            Cases[][] casesList = new Cases[10][10];
+            Cases[][] casesList = new Cases[9][9];
 
             //On demande les pseudos des joueurs
             Scanner scan = new Scanner(System.in);
@@ -26,12 +23,27 @@ public class Jeu {
             String player2Name = scan.nextLine();
             System.out.println();
 
-            Scanner askGridSize = new Scanner(System.in);
-            System.out.println("Quelle taille de grille voulez-vous ?");
-            //gridSize = askGridSize.nextInt();
-            //System.out.println(gridSize);
-            grille = new Grille(askGridSize.nextInt(), casesList);
+            while(true) {
+                Scanner askGridSize = new Scanner(System.in);
+                System.out.println("Quelle taille de grille voulez-vous (Entre 3 et 9)?");
+                //gridSize = askGridSize.nextInt();
+                //System.out.println(gridSize);
 
+                try {
+                    grille = new Grille(askGridSize.nextInt(), casesList);
+                    if(grille.getSize() < 3 || grille.getSize() > 9){
+                        System.out.println("La taille de la grille doit être comprise entre 3 et 9.");
+                        continue;
+                    }
+                    else {
+                        break;
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Choisissez un nombre et non une lettre ou symbole");
+                    continue;
+                }
+            }
             //Création des cases avec leurs indices
             for (int i = 0; i < grille.getSize(); i++) {
                 for (int j = 0; j < grille.getSize(); j++) {
@@ -54,8 +66,8 @@ public class Jeu {
             int nombreCoups = 0; // Compteur du nombre de coups joués
             boolean victoire = false;
 
-            //Explication de l'agencement des cases et de ce que les joueurs devront faire
-        /*System.out.println("╔═══╦═══╦═══╗");
+            /*Explication de l'agencement des cases et de ce que les joueurs devront faire
+        System.out.println("╔═══╦═══╦═══╗");
         System.out.println("║ 1 ║ 2 ║ 3 ║");
         System.out.println("╠═══╬═══╬═══╣");
         System.out.println("║ 4 ║ 5 ║ 6 ║");
