@@ -39,14 +39,6 @@ public class Cases {
         this.yPosition = yPosition;
     }
 
-    public int getSimplePosition() {
-        return simplePosition;
-    }
-
-    public void setSimplePosition(int xPosition, int yPosition) {
-        this.simplePosition = 3*xPosition + yPosition + 1;
-    }
-
     @Override
     public String toString() {
         return "Cases{" +
@@ -57,22 +49,5 @@ public class Cases {
                 '}';
 
     }
-
-    /*Cases case1 = new Cases("X", 2, 0);
-
-        case1.setSimplePosition(case1.getxPosition(), case1.getyPosition());
-
-        System.out.println(case1);
-
-        Scanner symbol = new Scanner(System.in);
-        System.out.println("Quel symbole ?");
-        String symbole = symbol.nextLine();
-        if (symbole.length() != 1){
-            System.err.println("Fuck you");
-        }
-
-        case1.setSymbol(symbole);
-
-        System.out.println(case1);*/
 
 }

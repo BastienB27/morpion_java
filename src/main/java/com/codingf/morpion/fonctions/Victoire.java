@@ -16,6 +16,7 @@ public class Victoire {
 
     private static List<List<Character>> listList = new ArrayList<>();
 
+    //Fonction pour vérifier s'il y a une victoire dans une ligne
     public static boolean lineVictory(Grille grille, Cases[][] casesList){
 
         boolean lVictory = false;
@@ -45,6 +46,7 @@ public class Victoire {
 
     }
 
+    //Fonction pour vérifier s'il y a une victoire dans une colonne
     public static boolean columnVictory(Grille grille, Cases[][] casesList){
 
         boolean cVictory = false;
@@ -74,6 +76,7 @@ public class Victoire {
 
     }
 
+    //Fonction pour vérifier s'il y a une victoire dans la diagonale "haut-gauche/bas-droite"
     public static boolean leftRightDiagVictory(Grille grille, Cases[][] casesList){
 
         boolean lrdVictory = false;
@@ -94,6 +97,7 @@ public class Victoire {
 
     }
 
+    //Fonction pour vérifier s'il y a une victoire dans la diagonale "haut-droite/bas-gauche"
     public static boolean rightLeftDiagVictory(Grille grille, Cases[][] casesList){
 
         boolean rldVictory = false;

@@ -32,6 +32,7 @@ public class Grille {
     }
 
 
+    //Fonction pour afficher la grille
     public void affichageGrille(){
         System.out.print("  ");
         for(int i = 1; i<=this.size; i++){
