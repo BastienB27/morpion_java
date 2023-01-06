@@ -3,8 +3,8 @@ package com.codingf.morpion.fonctions;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.codingf.morpion.classes.Grille;
-import com.codingf.morpion.classes.Cases;
+import com.codingf.morpion.modeles.Grille;
+import com.codingf.morpion.modeles.Cases;
 
 public class Victoire {
 

@@ -1,8 +1,4 @@
-package com.codingf.morpion.classes;
-
-import com.codingf.morpion.classes.Cases;
-
-import java.util.List;
+package com.codingf.morpion.modeles;
 
 public class Grille {
 

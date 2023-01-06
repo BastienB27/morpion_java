@@ -1,7 +1,7 @@
 package com.codingf.morpion;
 
-import com.codingf.morpion.classes.Cases;
-import com.codingf.morpion.classes.Grille;
+import com.codingf.morpion.modeles.Cases;
+import com.codingf.morpion.modeles.Grille;
 import com.codingf.morpion.fonctions.Victoire;
 
 import java.util.Scanner;

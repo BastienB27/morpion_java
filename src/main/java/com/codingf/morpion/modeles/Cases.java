@@ -1,4 +1,4 @@
-package com.codingf.morpion.classes;
+package com.codingf.morpion.modeles;
 
 public class Cases {
 
