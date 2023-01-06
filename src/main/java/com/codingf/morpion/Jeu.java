@@ -173,9 +173,13 @@ public class Jeu {
 
                 //Si le nombre de coups est égal au nombre de cases, il y a égalité
                 if (nombreCoups == lenghboard) {
-                    grille.affichageGrille();
-                    System.out.println("Egalité, pas de victoire");
-                    historique.add("Egalité, pas de victoire");
+
+                    if (!victoire){
+                        grille.affichageGrille();
+                        System.out.println("Egalité, pas de victoire");
+                        historique.add("Egalité, pas de victoire");
+                    }
+
                     break;
                 }
 
