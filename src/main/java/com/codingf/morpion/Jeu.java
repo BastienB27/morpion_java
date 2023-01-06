@@ -134,7 +134,7 @@ public class Jeu {
                         if (0 <= c && c <= grille.getSize() - 1) {
                             if (casesList[l][c].getSymbol() == ' ') {
                                 casesList[l][c].setSymbol(currentPlayerSymbol);
-                                historique.add(currentPlayer + " a joué " + currentPlayerSymbol + " en " + l + "," + c);
+                                historique.add(currentPlayer + " a joué " + currentPlayerSymbol + " en " + (l+1) + "," + (c+1));
                             }
                             else {
                                 //On affiche une erreur si la case sélectionné est déjà prise
@@ -197,13 +197,27 @@ public class Jeu {
             if (victoire) {
                 grille.affichageGrille();
                 System.out.println("Victoire de " + currentPlayer + "\n");
-                historique.add("Victoire de " + currentPlayer + "\n\n");
+                historique.add("Victoire de " + currentPlayer + "\n");
             }
+
+            for (int i = 0; i < grille.getSize(); i++) {
+                for (int j = 0; j < grille.getSize(); j++) {
+                    historique.add("[" + casesList[i][j].getSymbol() + "]");
+                }
+                historique.add("");
+            }
+            historique.add("\n");
 
             try {
                 BufferedWriter sortie = new BufferedWriter(new FileWriter("historique.txt", true));
                 for (int i = 0; i<historique.size(); i++){
-                    sortie.write(historique.get(i) + "\n");
+                    if (historique.get(i).length() == 3){
+                        sortie.write(historique.get(i));
+                    }
+                    else {
+                        sortie.write(historique.get(i) + "\n");
+                    }
+
                 }
                 sortie.close();
             }
