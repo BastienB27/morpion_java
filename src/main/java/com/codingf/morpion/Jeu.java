@@ -2,6 +2,7 @@ package com.codingf.morpion;
 
 import com.codingf.morpion.classes.Cases;
 import com.codingf.morpion.classes.Grille;
+import com.codingf.morpion.fonctions.Victoire;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,126 +11,10 @@ import java.util.Scanner;
 
 public class Jeu {
 
-    static int gridSize;
-
-    //Liste d'objets Cases qui regroupe les informations de toutes les cases
-    //static List<Cases> casesList = new ArrayList<>();
-    static Cases[][] casesList = new Cases[10][10];
-
-    //Fonction pour afficher la grille
-    /*static void affichageGrille(){
-        System.out.print("  ");
-        for(int i = 1; i<=gridSize; i++){
-            System.out.print("   " + i);
-        }
-
-        System.out.println();
-        System.out.print("   ╔");
-        for(int i = 1; i<gridSize; i++){
-            System.out.print("═══╦");
-        }
-        System.out.println("═══╗");
-
-        for(int i = 0 ;i<gridSize; i++){
-            System.out.print(" " + (i+1) + " ║ ");
-            //System.out.print(" ║ ");
-            for(int j = 0; j<gridSize ;j++){
-                //System.out.println(casesList[i][j]);
-                System.out.print(casesList[i][j].getSymbol() + " ║ ");
-            }
-            System.out.println();
-            if(i == gridSize-1){
-                continue;
-            }
-            System.out.print("   ╠");
-            for(int j = 0; j<gridSize-1; j++){
-                System.out.print("═══╬");
-            }
-            System.out.println("═══╣");
-        }
-
-        System.out.print("   ╚");
-        for(int i = 1; i<gridSize; i++){
-            System.out.print("═══╩");
-        }
-        System.out.println("═══╝");
-
-        /*System.out.println(" 1 ║ " + casesList[0][0].getSymbol() + " ║ " + casesList[0][1].getSymbol() + " ║ " + casesList[0][2].getSymbol() + " ║ ");
-        System.out.println("   ╠═══╬═══╬═══╣");
-        System.out.println(" 2 ║ " + casesList[1][0].getSymbol() + " ║ " + casesList[1][1].getSymbol() + " ║ " + casesList[1][2].getSymbol() + " ║ ");
-        System.out.println("   ╠═══╬═══╬═══╣");
-        System.out.println(" 3 ║ " + casesList[2][0].getSymbol() + " ║ " + casesList[2][1].getSymbol() + " ║ " + casesList[2][2].getSymbol() + " ║ ");
-        //System.out.println("   ╚═══╩═══╩═══╝");
-    }*/
-
-    static List<Character> symbolList = new ArrayList<>();
-
-    static List<List<Character>> listList = new ArrayList<>();
-
-    static void lineVictory(){
-
-        symbolList.clear();
-        listList.clear();
-
-            for (int ligne = 0; ligne<gridSize; ligne++){
-                for (int colonne = 0; colonne<gridSize; colonne++){
-                    symbolList.add(casesList[ligne][colonne].getSymbol());
-                }
-            }
-
-        for (int index = 0; index<gridSize; index++){
-            //System.out.println(symbolList.subList(gridSize*index, gridSize*(index+1)));
-            listList.add(symbolList.subList(gridSize*index, gridSize*(index+1)));
-        }
-    }
-
-    static void columnVictory(){
-
-        symbolList.clear();
-        listList.clear();
-
-        for (int ligne = 0; ligne<gridSize; ligne++){
-            for (int colonne = 0; colonne<gridSize; colonne++){
-                symbolList.add(casesList[colonne][ligne].getSymbol());
-            }
-        }
-
-        for (int index = 0; index<gridSize; index++){
-            //System.out.println(symbolList.subList(gridSize*index, gridSize*(index+1)));
-            listList.add(symbolList.subList(gridSize*index, gridSize*(index+1)));
-        }
-    }
-
-    static void leftRightDiagVictory(){
-
-        symbolList.clear();
-
-        for (int ligne = 0; ligne<gridSize; ligne++){
-            for (int colonne = 0; colonne<gridSize; colonne++){
-                if (ligne == colonne) {
-                    symbolList.add(casesList[ligne][colonne].getSymbol());
-                }
-
-            }
-        }
-
-    }
-
-    static void rightLeftDiagVictory(){
-
-        symbolList.clear();
-
-        for (int ligne = 0; ligne<gridSize; ligne++){
-            for (int colonne = 0; colonne<gridSize; colonne++){
-                if (ligne + colonne == gridSize-1) {
-                    symbolList.add(casesList[ligne][colonne].getSymbol());
-                }
-            }
-        }
-
-    }
-
     public static void main(String[] args) {
+
+        Grille grille;
+        Cases[][] casesList = new Cases[10][10];
 
         //On demande les pseudos des joueurs
         Scanner scan = new Scanner(System.in);
@@ -141,9 +26,9 @@ public class Jeu {
 
         Scanner askGridSize = new Scanner(System.in);
         System.out.println("Quelle taille de grille voulez-vous ?");
-        gridSize = askGridSize.nextInt();
-        System.out.println(gridSize);
-        Grille grille = new Grille(gridSize, casesList);
+        //gridSize = askGridSize.nextInt();
+        //System.out.println(gridSize);
+        grille = new Grille(askGridSize.nextInt(), casesList);
 
         //Création des cases avec leurs indices
         for(int i = 0; i<grille.getSize(); i++){
@@ -161,7 +46,9 @@ public class Jeu {
 
         String input;
 
-        int lenghboard = casesList.length*casesList.length; // Nombre total de cases
+        int lenghboard = grille.getSize()*grille.getSize(); // Nombre total de cases
+        System.out.println(casesList.length);
+        System.out.println(lenghboard);
         int nombreCoups = 0; // Compteur du nombre de coups joués
         boolean victoire = false;
 
@@ -196,7 +83,6 @@ public class Jeu {
                 System.out.println("Veuillez respecter le format demandé : ligne,colonne");
                 continue;
             }
-
 
             int l;
             int c;
@@ -234,97 +120,9 @@ public class Jeu {
 
             //La liste des conditions de victoire
 
-            //boolean allEqual = false;
-            boolean lVictory = false;
-            boolean cVictory = false;
-            boolean lrdVictory = false;
-            boolean rldVictory = false;
-
-
-            lineVictory();
-            //System.out.println(symbolList + " lines");
-            System.out.println(listList + " lines");
-
-            for (int i = 0; i<listList.size(); i++){
-                lVictory = listList.get(i).stream().distinct().count() <= 1 && listList.get(i).get(0) != ' ';
-                if (lVictory){
-                    break;
-                }
-            }
-
-            columnVictory();
-            //System.out.println(symbolList + " columns");
-            System.out.println(listList + " columns");
-            for (int i = 0; i<listList.size(); i++){
-                cVictory = listList.get(i).stream().distinct().count() <= 1 && listList.get(i).get(0) != ' ';
-                if (cVictory){
-                    break;
-                }
-            }
-
-            leftRightDiagVictory();
-            System.out.println(symbolList + " lr diag");
-
-            lrdVictory = symbolList.stream().distinct().count() <= 1 && symbolList.get(0) != ' ';
-
-            rightLeftDiagVictory();
-            System.out.println(symbolList + " rl diag");
-
-            rldVictory = symbolList.stream().distinct().count() <= 1 && symbolList.get(0) != ' ';
-
-            if  (lVictory || cVictory || lrdVictory || rldVictory){
+            if (Victoire.lineVictory(grille, casesList) || Victoire.columnVictory(grille, casesList) || Victoire.leftRightDiagVictory(grille, casesList) || Victoire.rightLeftDiagVictory(grille, casesList)){
                 victoire = true;
             }
-
-
-
-            /*if (casesList[0][0].getSymbol() == casesList[0][1].getSymbol() &&
-                    casesList[0][0].getSymbol() == casesList[0][2].getSymbol() &&
-                    casesList[0][0].getSymbol() != ' ') {
-                victoire = true;
-            }
-
-            if (casesList[1][0].getSymbol() == casesList[1][1].getSymbol() &&
-                    casesList[1][0].getSymbol() == casesList[1][2].getSymbol() &&
-                    casesList[1][0].getSymbol() != ' ') {
-                victoire = true;
-            }
-
-            if (casesList[2][0].getSymbol() == casesList[2][1].getSymbol() &&
-                    casesList[2][0].getSymbol() == casesList[2][2].getSymbol() &&
-                    casesList[2][0].getSymbol() != ' ') {
-                victoire = true;
-            }
-
-            if (casesList[0][0].getSymbol() == casesList[1][0].getSymbol() &&
-                    casesList[0][0].getSymbol() == casesList[2][0].getSymbol() &&
-                    casesList[0][0].getSymbol() != ' ') {
-                victoire = true;
-            }
-
-            if (casesList[0][1].getSymbol() == casesList[1][1].getSymbol() &&
-                    casesList[0][1].getSymbol() == casesList[2][1].getSymbol() &&
-                    casesList[0][1].getSymbol() != ' ') {
-                victoire = true;
-            }
-
-            if (casesList[0][2].getSymbol() == casesList[1][2].getSymbol() &&
-                    casesList[0][2].getSymbol() == casesList[2][2].getSymbol() &&
-                    casesList[0][2].getSymbol() != ' ') {
-                victoire = true;
-            }
-
-            /*if (casesList[0][0].getSymbol() == casesList[1][1].getSymbol() &&
-                    casesList[0][0].getSymbol() == casesList[2][2].getSymbol() &&
-                    casesList[0][0].getSymbol() != ' ') {
-                victoire = true;
-            }
-
-            if (casesList[0][2].getSymbol() == casesList[1][1].getSymbol() &&
-                    casesList[0][2].getSymbol() == casesList[2][0].getSymbol() &&
-                    casesList[0][2].getSymbol() != ' ') {
-                victoire = true;
-            }*/
 
             nombreCoups++;
 
