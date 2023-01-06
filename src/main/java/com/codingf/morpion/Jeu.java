@@ -175,6 +175,7 @@ public class Jeu {
                 if (nombreCoups == lenghboard) {
                     grille.affichageGrille();
                     System.out.println("Egalité, pas de victoire");
+                    historique.add("Egalité, pas de victoire");
                     break;
                 }
 
@@ -192,8 +193,6 @@ public class Jeu {
                 System.out.println("Victoire de " + currentPlayer + "\n");
                 historique.add("Victoire de " + currentPlayer + "\n\n");
             }
-
-            //System.out.println("Historique de la partie : \n");
 
             try {
                 BufferedWriter sortie = new BufferedWriter(new FileWriter("historique.txt", true));
