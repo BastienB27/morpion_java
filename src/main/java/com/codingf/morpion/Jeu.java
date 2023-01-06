@@ -22,7 +22,7 @@ public class Jeu {
         while(true) {
 
             Grille grille;
-            Cases[][] casesList = new Cases[9][9];
+            Cases[][] casesList;
             char player2Symbol;
             List<String> historique = new ArrayList<>();
 
@@ -57,7 +57,9 @@ public class Jeu {
                 System.out.println("Quelle taille de grille voulez-vous (Entre 3 et 9)?");
 
                 try {
-                    grille = new Grille(askGridSize.nextInt(), casesList);
+                    int gridSize = askGridSize.nextInt();
+                    casesList = new Cases[gridSize][gridSize];
+                    grille = new Grille(gridSize, casesList);
                     if(grille.getSize() < 3 || grille.getSize() > 9){
                         System.out.println("La taille de la grille doit être comprise entre 3 et 9.");
                     }
